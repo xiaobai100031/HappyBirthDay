@@ -8,11 +8,95 @@
   <title>生日快乐！</title>
 
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+<script>
+  function canvas_display(){
+    document.getElementById('all').style.display='block';
+}
+  var date=new Date()
+        mouth=date.getMonth()+1
+        day=date.getDay()+1
+function thing(e)
+{
+    var e = e||event;
+    x=e.offsetX
+    y=e.offsetY
 
+    var canvas=document.getElementById('can')
+    if (x>200){
+        if (mouth<12)
+        mouth+=1
+        else mouth=1
+    }
+    else {
+        if (day<31) day+=1
+        else day=1
+    }
+
+    draw(1)
+
+
+ if (day==5&&mouth==7)
+    {
+        canvas.style.display='none'
+        canvas_display()
+        var svg=document.getElementById('cake')
+        svg.unpauseAnimations()
+        var bk=document.getElementById('bk')
+        bk.style.backgroundImage="url('bk.jpg')"
+        var bgm=document.getElementById('music')
+        bgm.play()
+    }
+
+
+}
+function draw(key){
+    var canvas=document.getElementById('can')
+        
+
+    var ctx=canvas.getContext('2d')
+    if (key==1){
+        ctx.fillStyle='white'
+        ctx.fillRect(50,50,300,200)
+    }
+    ctx.lineWidth="6";
+    ctx.strokeStyle="pink";
+    ctx.rect(50,50,300,200)
+    ctx.stroke()
+
+    ctx.font="80px Verdana";
+    // Create gradient
+    var gradient=ctx.createLinearGradient(0,0,canvas.width,0);
+    gradient.addColorStop("0","magenta");
+    gradient.addColorStop("0.5","blue");
+    gradient.addColorStop("1.0","red");
+    // Fill with gradient
+    ctx.fillStyle=gradient;
+    ctx.fillText(mouth,80,170);
+
+    ctx.fillText(day,200,170);
+    ctx.fillStyle='black'
+    ctx.font="20px Bold";
+    ctx.fillText('Month',170,190);
+    ctx.fillText('Day',290,190);    
+}
+
+    window.onload=function(){
+        draw(0)
+        var canvas=document.getElementById('can')
+        canvas.onmousedown=thing
+        var svg=document.getElementById('cake')
+        svg.pauseAnimations();
+
+        }
+</script>
 </head>
 
-<body style="background-image:url('riri.jpg');background-repeat: no-repeat;">
+<body id='bk' style="background-size: 100%;">
 
+<div>
+  <canvas id='can' width="500" height="500"></canvas>
+</div>
+<div id='all' style="display:none;">
   <div class="velas">
     <div class="fuego"></div>
     <div class="fuego"></div>
@@ -20,7 +104,7 @@
     <div class="fuego"></div>
     <div class="fuego"></div>
 </div>
-<svg id="cake" version="1.1" x="0px" y="0px" width="200px" height="500px" viewBox="0 0 200 500" enable-background="new 0 0 200 500" xml:space="preserve">
+<svg id="cake" version="1.1" x="0px" y="0px" width="400px" height="500px" viewBox="0 0 200 500" enable-background="new 0 0 200 500" xml:space="preserve">
     <path fill="#a88679" d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
 		c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z">
         <animate id="bizcocho_3" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1" begin="relleno_2.end" dur="0.3s" fill="freeze" values="
@@ -168,10 +252,12 @@
     </path>
     <rect x="10" y="475.571" fill="#fefae9" width="180" height="4" />
 </svg>
-<div class="text">
+<div class="text" name="text" >
   <h1>HAPPY BIRTHDAY!</h1>
-  <p>陈名森</p>
-</div>
+  <h1>林妹妹生日快乐！</h1>
 
+</div>
+<audio id='music' src='bgm.mp3' controls></audio>
+</div>
 </body>
 </html>
